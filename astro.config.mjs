@@ -2,10 +2,14 @@
 import { defineConfig } from 'astro/config';
 import tailwindcss from '@tailwindcss/vite';
 
+import netlify from '@astrojs/netlify';
+
 export default defineConfig({
-  site: 'https://masbahnana.github.io',
-  base: '/nanalab',
+  site: 'https://nanalab.netlify.app',
+
   vite: {
     plugins: [tailwindcss()]
-  }
+  },
+
+  adapter: netlify()
 });
