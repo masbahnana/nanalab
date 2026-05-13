@@ -1,0 +1,194 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const cards = [
+  { cat: 'both', catLabel: 'Python + R', title: 'Mapping reptile distributions with GBIF', desc: 'Pulling occurrence data from the GBIF API and plotting distribution maps in both Python and R.' },
+  { cat: 'both', catLabel: 'Python + R', title: 'Pandas vs dplyr: loading and cleaning a dataset', desc: 'The same data wrangling task done twice — same result, very different syntax.' },
+  { cat: 'both', catLabel: 'Python + R', title: 'Seaborn vs ggplot2: your first boxplot', desc: 'Two libraries, one chart. A side-by-side comparison for bioscience data.' },
+  { cat: 'python', catLabel: 'Python', title: 'Setting up VS Code for Python + R — no RStudio required', desc: 'A clean setup guide for people who live in VS Code and have a grudge against RStudio.' },
+  { cat: 'r', catLabel: 'R', title: 'ggplot2 for bioscience: a visual guide', desc: 'Everything you need to make publication-ready plots without touching RStudio.' },
+  { cat: 'reading', catLabel: 'Reading Corner', title: 'What I\'m reading: intro to biostatistics', desc: 'Notes and thoughts on the books and papers I\'m working through as a bioscience student.' },
+  { cat: 'personal', catLabel: 'Personal', title: 'Why I started NanaLab', desc: 'From IT to Animal Care to Bioveterinary Science — and why data follows me everywhere.' },
+];
+---
+<Layout title="Blog — NanaLab">
+  <section class="blog-page">
+    <h1>Blog</h1>
+    <p class="blog-subtitle">R, Python, bioscience, and whatever else is on my mind.</p>
+
+    <div class="filters">
+      <button class="filter-btn active" data-cat="all">All</button>
+      <button class="filter-btn f-python" data-cat="python">🐍 Python</button>
+      <button class="filter-btn f-r" data-cat="r">📊 R</button>
+      <button class="filter-btn f-both" data-cat="both">🔬 Python + R</button>
+      <button class="filter-btn f-reading" data-cat="reading">📚 Reading Corner</button>
+      <button class="filter-btn f-personal" data-cat="personal">💭 Personal</button>
+    </div>
+
+    <div class="blog-grid" id="blog-grid">
+      {cards.map(card => (
+        <div class="blog-card" data-cat={card.cat}>
+          <span class={`card-cat cat-${card.cat}`}>{card.catLabel}</span>
+          <h3>{card.title}</h3>
+          <p>{card.desc}</p>
+          <div class="card-date">Coming soon</div>
+        </div>
+      ))}
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .blog-page {
+    padding: 64px 48px;
+    max-width: 860px;
+    margin: 0 auto;
+  }
+
+  .blog-page h1 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 2.2rem;
+    letter-spacing: -1px;
+    margin-bottom: 8px;
+  }
+
+  .blog-subtitle {
+    color: var(--gray);
+    font-size: 0.95rem;
+    font-weight: 300;
+    margin-bottom: 40px;
+  }
+
+  .filters {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 36px;
+  }
+
+  .filter-btn {
+    padding: 8px 18px;
+    border-radius: 999px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 500;
+    border: 1.5px solid var(--border);
+    background: var(--white);
+    color: var(--gray);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .filter-btn:hover { border-color: #aaa; color: var(--black); }
+  .filter-btn.active { background: var(--black); color: var(--white); border-color: var(--black); }
+  .filter-btn.f-python.active { background: #1d4ed8; border-color: #1d4ed8; color: var(--white); }
+  .filter-btn.f-r.active { background: #9d174d; border-color: #9d174d; color: var(--white); }
+  .filter-btn.f-both.active { background: var(--lime-dark); border-color: var(--lime-dark); color: var(--white); }
+  .filter-btn.f-reading.active { background: #92400e; border-color: #92400e; color: var(--white); }
+  .filter-btn.f-personal.active { background: #6b21a8; border-color: #6b21a8; color: var(--white); }
+
+  .blog-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 18px;
+  }
+
+  .blog-card {
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    padding: 22px;
+    cursor: pointer;
+    transition: border-color 0.2s, transform 0.15s, box-shadow 0.2s;
+    background: var(--white);
+  }
+
+  .blog-card:hover {
+    border-color: var(--lime);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 28px rgba(163,230,53,0.13);
+  }
+
+  .card-cat {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 999px;
+    display: inline-block;
+    margin-bottom: 14px;
+  }
+
+  .cat-python { background: #dbeafe; color: #1d4ed8; }
+  .cat-r { background: #fce7f3; color: #9d174d; }
+  .cat-both { background: var(--lime-soft); color: var(--lime-dark); }
+  .cat-reading { background: #fef3c7; color: #92400e; }
+  .cat-personal { background: #f3e8ff; color: #6b21a8; }
+
+  .blog-card h3 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    line-height: 1.4;
+    letter-spacing: -0.2px;
+    margin-bottom: 10px;
+  }
+
+  .blog-card p {
+    font-size: 0.82rem;
+    color: var(--gray);
+    line-height: 1.6;
+    font-weight: 300;
+  }
+
+  .card-date {
+    font-size: 0.72rem;
+    color: #bbb;
+    margin-top: 16px;
+  }
+
+  .no-posts {
+    grid-column: 1/-1;
+    text-align: center;
+    padding: 60px 0;
+    color: var(--gray);
+    font-size: 0.9rem;
+  }
+
+  @media (max-width: 640px) {
+    .blog-page { padding: 48px 20px; }
+  }
+</style>
+
+<script>
+  const btns = document.querySelectorAll<HTMLButtonElement>('.filter-btn');
+  const cards = document.querySelectorAll<HTMLElement>('.blog-card');
+  const grid = document.getElementById('blog-grid')!;
+
+  btns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      btns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const cat = btn.dataset.cat!;
+      let visible = 0;
+
+      cards.forEach(card => {
+        const show = cat === 'all' || card.dataset.cat === cat;
+        card.style.display = show ? 'block' : 'none';
+        if (show) visible++;
+      });
+
+      const existing = grid.querySelector('.no-posts');
+      if (visible === 0 && !existing) {
+        const empty = document.createElement('div');
+        empty.className = 'no-posts';
+        empty.textContent = 'No posts yet in this category — check back soon! 🌱';
+        grid.appendChild(empty);
+      } else if (visible > 0 && existing) {
+        existing.remove();
+      }
+    });
+  });
+</script>

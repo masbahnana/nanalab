@@ -1,17 +1,322 @@
 ---
+import Layout from '../layouts/Layout.astro';
 
+const posts = [
+  { cat: 'both', catLabel: 'Python + R', title: 'Mapping reptile distributions with GBIF', desc: 'Pulling occurrence data from the GBIF API and visualising species distribution maps — in Python and R.' },
+  { cat: 'both', catLabel: 'Python + R', title: 'Pandas vs dplyr: loading and cleaning a dataset', desc: 'The same data wrangling task done twice — same result, very different syntax.' },
+  { cat: 'python', catLabel: 'Python', title: 'Setting up VS Code for Python + R — no RStudio required', desc: 'A setup guide for people who live in VS Code and have a grudge against RStudio.' },
+  { cat: 'personal', catLabel: 'Personal', title: 'Why I started NanaLab', desc: 'From IT to Animal Care to Bioveterinary Science — and why data follows me everywhere.' },
+];
 ---
+<Layout title="NanaLab — Data meets animal science">
+  <section class="hero">
+    <div class="hero-eyebrow">Bioscience × Data Science</div>
+    <h1>Hi, I'm Nana.<br/><span class="highlight">Data</span> meets<br/>animal science.</h1>
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+    <div class="hero-bio">
+      <div class="hero-text">
+        <p>I'm a <strong>Bioveterinary Science student</strong> with a background in IT. NanaLab is where I document my journey learning data analysis applied to biology — comparing <strong>R and Python</strong> side by side, using real public datasets.</p>
+        <p>No gatekeeping. No pretending I know everything. Just honest exploration of data, biology, and everything in between. 🔬</p>
+        <div class="hero-btns">
+          <a href="/blog" class="btn-primary">Read the blog</a>
+          <a href="https://pethology.app" target="_blank" rel="noopener" class="btn-ghost">Pethology ↗</a>
+        </div>
+      </div>
+      <div class="hero-stats">
+        <div class="stat">
+          <div class="stat-number">R + 🐍</div>
+          <div class="stat-label">Side by side</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">🧬</div>
+          <div class="stat-label">Bio datasets</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">GBIF</div>
+          <div class="stat-label">Open datasets</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <section class="latest">
+    <div class="section-header">
+      <h2>Latest posts</h2>
+      <a href="/blog" class="see-all">View all →</a>
+    </div>
+    <div class="posts-list">
+      {posts.map(post => (
+        <a href="/blog" class="post-row">
+          <span class={`post-row-cat cat-${post.cat}`}>{post.catLabel}</span>
+          <div class="post-row-content">
+            <div class="post-row-title">{post.title}</div>
+            <div class="post-row-desc">{post.desc}</div>
+          </div>
+          <span class="post-row-date">Coming soon</span>
+        </a>
+      ))}
+    </div>
+  </section>
+</Layout>
+
+<style>
+  /* HERO */
+  .hero {
+    padding: 88px 48px 72px;
+    max-width: 860px;
+    margin: 0 auto;
+  }
+
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--lime-dark);
+    margin-bottom: 28px;
+    animation: fadeUp 0.45s ease both;
+  }
+
+  .hero-eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 24px;
+    height: 2px;
+    background: var(--lime);
+  }
+
+  h1 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(2.6rem, 5.5vw, 4.2rem);
+    line-height: 1.08;
+    letter-spacing: -2px;
+    margin-bottom: 24px;
+    animation: fadeUp 0.45s ease 0.08s both;
+  }
+
+  h1 .highlight {
+    background: var(--lime);
+    padding: 0 8px;
+    border-radius: 4px;
+  }
+
+  .hero-bio {
+    display: flex;
+    gap: 48px;
+    align-items: flex-start;
+    margin-top: 40px;
+    animation: fadeUp 0.45s ease 0.16s both;
+  }
+
+  .hero-text { flex: 1; }
+
+  .hero-text p {
+    font-size: 1.05rem;
+    color: var(--gray);
+    line-height: 1.8;
+    font-weight: 300;
+    max-width: 480px;
+  }
+
+  .hero-text p + p { margin-top: 16px; }
+
+  .hero-text p strong {
+    color: var(--black);
+    font-weight: 500;
+  }
+
+  .hero-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    min-width: 160px;
+  }
+
+  .stat {
+    border-left: 3px solid var(--lime);
+    padding-left: 16px;
+  }
+
+  .stat-number {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.5rem;
+    letter-spacing: -1px;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .stat-label {
+    font-size: 0.72rem;
+    color: var(--gray);
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+
+  .hero-btns {
+    display: flex;
+    gap: 12px;
+    margin-top: 36px;
+    flex-wrap: wrap;
+    animation: fadeUp 0.45s ease 0.24s both;
+  }
+
+  .btn-primary {
+    background: var(--black);
+    color: var(--white);
+    padding: 13px 26px;
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    font-size: 0.9rem;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .btn-primary:hover { background: #222; transform: translateY(-1px); }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--black);
+    padding: 13px 26px;
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    font-size: 0.9rem;
+    border: 1.5px solid var(--border);
+    cursor: pointer;
+    transition: border-color 0.2s, transform 0.15s;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .btn-ghost:hover { border-color: #999; transform: translateY(-1px); }
+
+  /* DIVIDER */
+  .section-divider {
+    height: 1px;
+    background: var(--border);
+    max-width: 860px;
+    margin: 0 auto;
+  }
+
+  /* LATEST POSTS */
+  .latest {
+    padding: 72px 48px;
+    max-width: 860px;
+    margin: 0 auto;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 36px;
+  }
+
+  .section-header h2 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1.5rem;
+    letter-spacing: -0.5px;
+  }
+
+  .see-all {
+    font-size: 0.82rem;
+    color: var(--gray);
+    font-weight: 500;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .see-all:hover { color: var(--black); }
+
+  .posts-list {
+    display: flex;
+    flex-direction: column;
+    border: 1.5px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+  }
+
+  .post-row {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 22px 24px;
+    background: var(--white);
+    cursor: pointer;
+    transition: background 0.15s;
+    border-bottom: 1px solid var(--border);
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .post-row:last-child { border-bottom: none; }
+  .post-row:hover { background: var(--gray-light); }
+
+  .post-row-cat {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 999px;
+    white-space: nowrap;
+    min-width: 84px;
+    text-align: center;
+  }
+
+  .cat-python { background: #dbeafe; color: #1d4ed8; }
+  .cat-r { background: #fce7f3; color: #9d174d; }
+  .cat-both { background: var(--lime-soft); color: var(--lime-dark); }
+  .cat-reading { background: #fef3c7; color: #92400e; }
+  .cat-personal { background: #f3e8ff; color: #6b21a8; }
+
+  .post-row-content { flex: 1; }
+
+  .post-row-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 600;
+    font-size: 0.95rem;
+    letter-spacing: -0.2px;
+    margin-bottom: 4px;
+    color: var(--black);
+  }
+
+  .post-row-desc {
+    font-size: 0.82rem;
+    color: var(--gray);
+    font-weight: 300;
+    line-height: 1.5;
+  }
+
+  .post-row-date {
+    font-size: 0.75rem;
+    color: #bbb;
+    white-space: nowrap;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 640px) {
+    .hero { padding: 60px 20px 48px; }
+    .hero-bio { flex-direction: column; gap: 28px; }
+    .hero-stats { flex-direction: row; flex-wrap: wrap; }
+    .latest { padding: 48px 20px; }
+    .post-row { flex-wrap: wrap; }
+  }
+</style>

@@ -1,0 +1,136 @@
+---
+export interface Props {
+  title?: string;
+}
+const { title = 'NanaLab' } = Astro.props;
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="light only" />
+  <title>{title}</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; color-scheme: light only; }
+
+    :root {
+      --lime: #a3e635;
+      --lime-soft: #ecfccb;
+      --lime-mid: #84cc16;
+      --lime-dark: #3f6212;
+      --black: #0f0f0f;
+      --gray: #6b7280;
+      --gray-light: #f9fafb;
+      --border: #e5e7eb;
+      --white: #ffffff;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--white);
+      color: var(--black);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 48px;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: rgba(255,255,255,0.96);
+      backdrop-filter: blur(10px);
+      z-index: 100;
+    }
+
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.2rem;
+      color: var(--black);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      letter-spacing: -0.5px;
+    }
+
+    .logo-dot {
+      width: 9px;
+      height: 9px;
+      background: var(--lime);
+      border-radius: 50%;
+      display: inline-block;
+      flex-shrink: 0;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--gray);
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover,
+    .nav-links a[aria-current="page"] { color: var(--black); }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 28px 48px;
+      margin-top: 80px;
+    }
+
+    .footer-inner {
+      max-width: 860px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    footer p { font-size: 0.78rem; color: var(--gray); }
+    footer a { font-size: 0.78rem; color: var(--gray); text-decoration: none; transition: color 0.2s; }
+    footer a:hover { color: var(--black); }
+
+    @media (max-width: 640px) {
+      nav { padding: 16px 20px; }
+      footer { padding: 24px 20px; }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="/" class="nav-logo">
+      <span class="logo-dot"></span>NanaLab
+    </a>
+    <ul class="nav-links">
+      <li><a href="/" aria-current={Astro.url.pathname === '/' ? 'page' : undefined}>Home</a></li>
+      <li><a href="/blog" aria-current={Astro.url.pathname.startsWith('/blog') ? 'page' : undefined}>Blog</a></li>
+      <li><a href="https://pethology.app" target="_blank" rel="noopener">Pethology ↗</a></li>
+    </ul>
+  </nav>
+
+  <slot />
+
+  <footer>
+    <div class="footer-inner">
+      <p>© 2026 NanaLab — built with 🔬 and too much coffee</p>
+      <a href="https://pethology.app" target="_blank" rel="noopener">Also: Pethology →</a>
+    </div>
+  </footer>
+</body>
+</html>
