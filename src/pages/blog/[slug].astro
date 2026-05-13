@@ -18,7 +18,11 @@ const catLabel: Record<string, string> = {
   personal: 'Personal',
 };
 ---
-<Layout title={`${post.data.title} — NanaLab`}>
+<Layout
+  title={`${post.data.title} — NanaLab`}
+  description={post.data.description}
+  canonicalUrl={Astro.url.href}
+>
   <article class="post">
     <header class="post-header">
       <a href="/blog" class="back">← Back to blog</a>
@@ -129,9 +133,6 @@ const catLabel: Record<string, string> = {
   }
 
   .post-body pre {
-    background: #0f0f0f;
-    color: #e5e7eb;
-    padding: 20px 24px;
     border-radius: 10px;
     overflow-x: auto;
     margin: 24px 0;
@@ -139,11 +140,18 @@ const catLabel: Record<string, string> = {
     line-height: 1.7;
   }
 
+  /* Shiki wraps code in <pre><code> — reset our inline code styles inside pre */
   .post-body pre code {
     background: none;
     padding: 0;
     color: inherit;
     font-size: inherit;
+    border-radius: 0;
+  }
+
+  /* Shiki adds padding via style attribute — ensure consistent look */
+  .post-body :global(.astro-code) {
+    padding: 20px 24px !important;
   }
 
   .post-body ul, .post-body ol {

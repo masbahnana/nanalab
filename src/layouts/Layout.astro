@@ -1,8 +1,19 @@
 ---
 export interface Props {
   title?: string;
+  description?: string;
+  ogImage?: string;
+  canonicalUrl?: string;
 }
-const { title = 'NanaLab' } = Astro.props;
+
+const {
+  title = 'NanaLab',
+  description = 'Data science applied to biosciences — Python, R, and real datasets by Nana.',
+  ogImage = '/nana.jpg',
+  canonicalUrl = Astro.url.href,
+} = Astro.props;
+
+const siteName = 'NanaLab';
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -11,6 +22,26 @@ const { title = 'NanaLab' } = Astro.props;
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="color-scheme" content="light only" />
   <title>{title}</title>
+  <link rel="canonical" href={canonicalUrl} />
+
+  <!-- SEO -->
+  <meta name="description" content={description} />
+  <meta name="author" content="Nana" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content={siteName} />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={canonicalUrl} />
+  <meta property="og:image" content={new URL(ogImage, Astro.site).href} />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={new URL(ogImage, Astro.site).href} />
+
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
