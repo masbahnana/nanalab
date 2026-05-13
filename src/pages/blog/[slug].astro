@@ -1,0 +1,167 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map(post => ({ params: { slug: post.id }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+const catLabel: Record<string, string> = {
+  python: 'Python',
+  r: 'R',
+  both: 'Python + R',
+  reading: 'Reading Corner',
+  personal: 'Personal',
+};
+---
+<Layout title={`${post.data.title} — NanaLab`}>
+  <article class="post">
+    <header class="post-header">
+      <a href="/blog" class="back">← Back to blog</a>
+      <span class={`post-cat cat-${post.data.category}`}>{catLabel[post.data.category]}</span>
+      <h1>{post.data.title}</h1>
+      <p class="post-date">
+        {post.data.date.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}
+      </p>
+    </header>
+    <div class="post-body">
+      <Content />
+    </div>
+  </article>
+</Layout>
+
+<style>
+  .post {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 64px 48px 96px;
+  }
+
+  .post-header { margin-bottom: 48px; }
+
+  .back {
+    display: inline-block;
+    font-size: 0.82rem;
+    color: var(--gray);
+    text-decoration: none;
+    margin-bottom: 24px;
+    transition: color 0.2s;
+  }
+  .back:hover { color: var(--black); }
+
+  .post-cat {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 999px;
+    display: inline-block;
+    margin-bottom: 16px;
+  }
+
+  .cat-python { background: #dbeafe; color: #1d4ed8; }
+  .cat-r { background: #fce7f3; color: #9d174d; }
+  .cat-both { background: var(--lime-soft); color: var(--lime-dark); }
+  .cat-reading { background: #fef3c7; color: #92400e; }
+  .cat-personal { background: #f3e8ff; color: #6b21a8; }
+
+  .post-header h1 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    letter-spacing: -1.5px;
+    line-height: 1.1;
+    margin-bottom: 12px;
+  }
+
+  .post-date {
+    font-size: 0.82rem;
+    color: var(--gray);
+    font-weight: 300;
+  }
+
+  .post-body {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: #1a1a1a;
+    font-weight: 300;
+  }
+
+  .post-body h2 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1.4rem;
+    letter-spacing: -0.5px;
+    margin: 48px 0 16px;
+    color: var(--black);
+  }
+
+  .post-body h3 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin: 32px 0 12px;
+    color: var(--black);
+  }
+
+  .post-body p { margin-bottom: 20px; }
+
+  .post-body strong { color: var(--black); font-weight: 500; }
+
+  .post-body a {
+    color: var(--lime-dark);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .post-body code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.88em;
+    background: var(--gray-light);
+    padding: 2px 6px;
+    border-radius: 4px;
+    color: var(--black);
+  }
+
+  .post-body pre {
+    background: #0f0f0f;
+    color: #e5e7eb;
+    padding: 20px 24px;
+    border-radius: 10px;
+    overflow-x: auto;
+    margin: 24px 0;
+    font-size: 0.88rem;
+    line-height: 1.7;
+  }
+
+  .post-body pre code {
+    background: none;
+    padding: 0;
+    color: inherit;
+    font-size: inherit;
+  }
+
+  .post-body ul, .post-body ol {
+    padding-left: 24px;
+    margin-bottom: 20px;
+  }
+
+  .post-body li { margin-bottom: 8px; }
+
+  .post-body blockquote {
+    border-left: 3px solid var(--lime);
+    padding-left: 20px;
+    margin: 24px 0;
+    color: var(--gray);
+    font-style: italic;
+  }
+
+  @media (max-width: 640px) {
+    .post { padding: 48px 20px 72px; }
+  }
+</style>
