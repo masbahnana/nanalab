@@ -10,8 +10,15 @@ const posts = [
 ---
 <Layout title="NanaLab — Data meets animal science">
   <section class="hero">
-    <div class="hero-eyebrow">Bioscience × Data Science</div>
-    <h1>Hi, I'm Nana.<br/><span class="highlight">Data</span> meets<br/>animal science.</h1>
+    <div class="hero-top">
+      <div class="hero-top-text">
+        <div class="hero-eyebrow">Bioscience × Data Science</div>
+        <h1>Hi, I'm Nana.<br/><span class="highlight">Data</span> meets<br/>animal science.</h1>
+      </div>
+      <div class="hero-photo">
+        <img src="/nana.jpg" alt="Nana" />
+      </div>
+    </div>
 
     <div class="hero-bio">
       <div class="hero-text">
@@ -63,6 +70,29 @@ const posts = [
 
 <style>
   /* HERO */
+  .hero-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 40px;
+  }
+
+  .hero-top-text { flex: 1; }
+
+  .hero-photo {
+    flex-shrink: 0;
+    width: 160px;
+    height: 160px;
+  }
+
+  .hero-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 3px solid var(--lime);
+  }
+
   .hero {
     padding: 88px 48px 72px;
     max-width: 860px;
@@ -314,6 +344,8 @@ const posts = [
 
   @media (max-width: 640px) {
     .hero { padding: 60px 20px 48px; }
+    .hero-top { flex-direction: column-reverse; align-items: flex-start; gap: 24px; }
+    .hero-photo { width: 100px; height: 100px; }
     .hero-bio { flex-direction: column; gap: 28px; }
     .hero-stats { flex-direction: row; flex-wrap: wrap; }
     .latest { padding: 48px 20px; }
